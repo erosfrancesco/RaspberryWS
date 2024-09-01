@@ -22,7 +22,8 @@ const events = {
     I2C: {
         SETTING: () => 'i2c-settings',
         DATA: () => 'i2c-data',
-        WRITE: () => '12c-write'
+        WRITE: () => 'i2c-write',
+        OPEN: () => 'i2c-success-open'
     },
 };
 

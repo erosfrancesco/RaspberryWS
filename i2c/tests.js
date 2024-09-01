@@ -1,8 +1,9 @@
 const {
     openI2C,
     closeI2C,
+    writeI2C,
     readI2CData
-} = require('./i2c');
+} = require('./');
 
 const REG = {
     'ADDRESS': (0x68),	     // Address value i2cdetect command
@@ -26,11 +27,12 @@ const REG = {
 };
 
 const channel = openI2C(REG.ADDRESS);
-channel.writeByteSync(REG.ADDRESS, REG.POWER_MGMT, 1);
-channel.writeByteSync(REG.ADDRESS, REG.SAMPLE_RATE, 7);
-channel.writeByteSync(REG.ADDRESS, REG.CONFIG, 0);
-channel.writeByteSync(REG.ADDRESS, REG.GYRO_CONFIG, 24);
-channel.writeByteSync(REG.ADDRESS, REG.INT_ENABLE, 1);
+
+writeI2C(channel, REG.ADDRESS, REG.POWER_MGMT, 1);
+writeI2C(channel, REG.ADDRESS, REG.SAMPLE_RATE, 7);
+writeI2C(channel, REG.ADDRESS, REG.CONFIG, 0);
+writeI2C(channel, REG.ADDRESS, REG.GYRO_CONFIG, 24);
+writeI2C(channel, REG.ADDRESS, REG.INT_ENABLE, 1);
 
 
 const computeData = (data) => {

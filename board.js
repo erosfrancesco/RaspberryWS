@@ -1,5 +1,5 @@
 const { openPin, readPin, writeToPin, writePWMToPin } = require('./pins');
-const { openI2C, readI2CData } = require('./i2c');
+const { openI2C, readI2CData, writeI2C } = require('./i2c');
 
 const pinout = {};
 const pwmListeners = {};
@@ -82,6 +82,7 @@ const onBoardConnected = (socket) => {
 
         if (!i2cSettings.channel) {
             i2cSettings.channel = openI2C(i2cSettings.address);
+            socket.emit(events.I2C.OPEN(), i2cSettings.address);
         }
 
         if (i2cSettings.interval) {
@@ -97,7 +98,20 @@ const onBoardConnected = (socket) => {
         }
     })
 
-    socket.on(events.I2C.WRITE(), () => { });
+    socket.on(events.I2C.WRITE(), (data) => {
+        if (Array.isArray(data)) {
+            data.forEach((datum) => {
+                const { address, value } = datum;
+                const hexAddress = Number('0x' + address);
+                writeI2C(i2cSettings.channel, i2cSettings.channel, hexAddress, value);
+            });
+            return;
+        }
+
+        const { address, value } = data;
+        const hexAddress = Number('0x' + address);
+        writeI2C(i2cSettings.channel, i2cSettings.channel, hexAddress, value);
+    });
 }
 //
 
