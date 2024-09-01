@@ -6,10 +6,12 @@
   - Read
     - Read Success
   - Write
+    - Write Success
   - Write PWM
+    - PWM Success
 
 ## I2C
-  - Settings
-  - Opened
+  - Settings (open and read)
+    - Opened Success
   - Data
   - Write
