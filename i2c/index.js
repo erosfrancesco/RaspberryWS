@@ -2,7 +2,7 @@ const i2c = require('i2c-bus');
 
 
 //
-function openI2C(address) {
+function openI2C() {
     const dataChannel = i2c.openSync(1);
 
     /*

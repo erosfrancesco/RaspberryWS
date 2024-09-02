@@ -81,7 +81,7 @@ const onBoardConnected = (socket) => {
 
 
         if (!i2cSettings.channel) {
-            i2cSettings.channel = openI2C(i2cSettings.address);
+            i2cSettings.channel = openI2C();
             socket.emit(events.I2C.OPEN(), i2cSettings.address);
         }
 
@@ -99,18 +99,19 @@ const onBoardConnected = (socket) => {
     })
 
     socket.on(events.I2C.WRITE(), (data) => {
+        console.log('writing', data);
         if (Array.isArray(data)) {
             data.forEach((datum) => {
                 const { address, value } = datum;
                 const hexAddress = Number('0x' + address);
-                writeI2C(i2cSettings.channel, i2cSettings.channel, hexAddress, value);
+                writeI2C(i2cSettings.channel, i2cSettings.address, hexAddress, value);
             });
             return;
         }
 
         const { address, value } = data;
         const hexAddress = Number('0x' + address);
-        writeI2C(i2cSettings.channel, i2cSettings.channel, hexAddress, value);
+        writeI2C(i2cSettings.channel, i2cSettings.address, hexAddress, value);
     });
 }
 //
