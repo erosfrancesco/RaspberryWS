@@ -2,18 +2,8 @@ const i2c = require('i2c-bus');
 
 
 //
-function openI2C() {
-    const dataChannel = i2c.openSync(1);
-
-    /*
-    writeI2C(dataChannel, address, (0x19), 7); // Sample rate
-    writeI2C(dataChannel, address, (0x6B), 1); // Power Management
-    writeI2C(dataChannel, address, (0x1A), 0); // Configuration
-    writeI2C(dataChannel, address, (0x1B), 24); // Gyro configuration
-    writeI2C(dataChannel, address, (0x38), 1); // Interrupt
-    /** */
-
-    return dataChannel;
+function openI2C(channel = 1) {
+    return i2c.openSync(channel);
 }
 
 function closeI2C(dataChannel) {

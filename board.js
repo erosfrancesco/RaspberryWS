@@ -33,7 +33,7 @@ const onPinWrite = (socket, pin) => {
     });
 }
 
-onPWMPinWrite = (socket, pin) => {
+const onPWMPinWrite = (socket, pin) => {
     socket.on(events.PIN_PWM.EVENT(pin), (value) => {
         if (!pinout[pin]) {
             socket.emit('Error', '[' + events.PIN_PWM.EVENT(pin) + ']: No pin!');
@@ -50,6 +50,69 @@ onPWMPinWrite = (socket, pin) => {
         socket.emit(events.PIN_PWM.SUCCESS(pin), value);
     });
 }
+
+const onI2CWrite = (socket) => {
+    socket.on(events.I2C.WRITE(), (data) => {
+        if (Array.isArray(data)) {
+            data.forEach((datum) => {
+                const { address, value } = datum;
+                const hexAddress = Number('0x' + address);
+                writeI2C(i2cSettings.channel, i2cSettings.address, hexAddress, value);
+            });
+            return;
+        }
+
+        const { address, value } = data;
+        const hexAddress = Number('0x' + address);
+        writeI2C(i2cSettings.channel, i2cSettings.address, hexAddress, value);
+        // Event emit Data Write
+    });
+}
+
+
+const onI2CSettings = (socket) => {
+    socket.on(events.I2C.SETTING(), ({ dataMap, readEvery }) => {
+        // DATA MAP SETTINGS
+        i2cSettings.dataMap = Object.keys(dataMap || {}).reduce((acc, key) => {
+            acc[key] = Number('0x' + dataMap[key]);
+            return acc;
+        }, {});
+        i2cSettings.readEvery = Number(readEvery);
+
+        // READ
+        if (i2cSettings.interval) {
+            clearInterval(i2cSettings.interval);
+        }
+
+        if (readEvery) {
+            i2cSettings.interval = setInterval(() => {
+                const data = readI2CData(i2cSettings.channel, i2cSettings.address, i2cSettings.dataMap);
+
+                socket.emit(events.I2C.DATA(), data);
+            }, readEvery);
+        }
+    });
+};
+
+const onI2COpen = (socket) => {
+    console.log('I2C Ready')
+    socket.on(events.I2C_OPEN.EVENT(), ({ address, channel }) => {
+        if (!address) {
+            return;
+        }
+
+        i2cSettings.address = Number('0x' + address);
+        socket.emit(events.I2C_OPEN.SUCCESS(), i2cSettings.address);
+
+        if (!i2cSettings.channel) {
+            i2cSettings.channel = openI2C(channel);
+        }
+
+        onI2CSettings(socket);
+        onI2CWrite(socket);
+    });
+}
+
 //
 
 //
@@ -70,51 +133,10 @@ const onBoardConnected = (socket) => {
         onPWMPinWrite(socket, pin);
     });
 
-    //
-    socket.on(events.I2C.SETTING(), ({ address, dataMap, readEvery }) => {
-        i2cSettings.address = Number('0x' + address);
-        i2cSettings.dataMap = Object.keys(dataMap).reduce((acc, key) => {
-            acc[key] = Number('0x' + dataMap[key]);
-            return acc;
-        }, {});
-        i2cSettings.readEvery = Number(readEvery);
-
-
-        if (!i2cSettings.channel) {
-            i2cSettings.channel = openI2C();
-            socket.emit(events.I2C.OPEN(), i2cSettings.address);
-        }
-
-        if (i2cSettings.interval) {
-            clearInterval(i2cSettings.interval);
-        }
-
-        if (readEvery) {
-            i2cSettings.interval = setInterval(() => {
-                const data = readI2CData(i2cSettings.channel, i2cSettings.address, i2cSettings.dataMap);
-
-                socket.emit(events.I2C.DATA(), data);
-            }, readEvery);
-        }
-    })
-
-    socket.on(events.I2C.WRITE(), (data) => {
-        console.log('writing', data);
-        if (Array.isArray(data)) {
-            data.forEach((datum) => {
-                const { address, value } = datum;
-                const hexAddress = Number('0x' + address);
-                writeI2C(i2cSettings.channel, i2cSettings.address, hexAddress, value);
-            });
-            return;
-        }
-
-        const { address, value } = data;
-        const hexAddress = Number('0x' + address);
-        writeI2C(i2cSettings.channel, i2cSettings.address, hexAddress, value);
-    });
+    onI2COpen(socket);
 }
 //
+
 
 const onBoardExit = () => {
     Object.keys(pinout).forEach((pin) => {

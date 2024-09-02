@@ -26,7 +26,7 @@ const REG = {
     /** */
 };
 
-const channel = openI2C(REG.ADDRESS);
+const channel = openI2C();
 
 writeI2C(channel, REG.ADDRESS, REG.POWER_MGMT, 1);
 writeI2C(channel, REG.ADDRESS, REG.SAMPLE_RATE, 7);

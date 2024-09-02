@@ -23,8 +23,16 @@ const events = {
         SETTING: () => 'i2c-settings',
         DATA: () => 'i2c-data',
         WRITE: () => 'i2c-write',
+        /*
+        READ: () => 'i2c-read',
         OPEN: () => 'i2c-success-open'
+        /** */
     },
+
+    I2C_OPEN: {
+        EVENT: () => 'i2c-open',
+        SUCCESS: () => 'i2c-success-open'
+    }
 };
 
 module.exports = events;
