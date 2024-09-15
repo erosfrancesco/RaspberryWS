@@ -16,6 +16,7 @@ const { onBoardConnected, onBoardExit } = require('./board');
 io.sockets.on('connection', function (socket) {
     console.log('Client connected');
     onBoardConnected(socket);
+    handleShellSocket(socket);
 });
 
 process.on('SIGINT', function () { // on ctrl+c
