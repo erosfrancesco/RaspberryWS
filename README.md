@@ -1,5 +1,8 @@
 # WS EVENTS:
 
+## SHELL
+  - Send (Receive)
+
 ## GPIO
   - Open
     - Open Success
