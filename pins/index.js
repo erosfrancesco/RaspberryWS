@@ -14,12 +14,13 @@ const openPin = (pin, direction = 'out') => {
 };
 
 const readPin = async (openedPin) => {
-    return await openedPin.digitalRead()
+    return await openedPin.digitalRead();
 }
 
 const writeToPin = async (openedPin, value) => {
     const digitalValue = Number(value);
-    await openedPin.digitalWrite(digitalValue);
+    const res = await openedPin.digitalWrite(digitalValue);
+    return res;
 };
 
 const writePWMToPin = (openedPin, value) => {
