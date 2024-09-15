@@ -1,14 +1,19 @@
-const { Gpio } = require('pigpio');
-const { openPin, readPin, writeToPin, writePWMToPin } = require('./pins');
+const { openPin, readPin, writeToPin, writePWMToPin } = require('./');
 
-const tests = async () => {
-    const pin = openPin('18');
+const digitalTest = async () => {
+    const pin = openPin('4');
 
-    const value = await readPin(pin);
-    console.log('Pin read:', value);
-    
+    await writeToPin(pin, 1);
+    const value1 = await readPin(pin);
+    console.log('Pin read:', value1);
+
+    await writeToPin(pin, 0);
+    const value2 = await readPin(pin);
+    console.log('Pin read:', value2);
+};
+
+const servoTest = () => {
     /*
-    // SERVO
     let pulseWidth = 500;
     let increment = 100;
 
@@ -28,4 +33,6 @@ const tests = async () => {
     /** */
 }
 
-tests()
+// TESTS
+digitalTest();
+servoTest();
