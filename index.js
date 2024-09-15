@@ -12,6 +12,7 @@ http.listen(PORT, () => console.log('Server ready on port:', PORT));
 
 //
 const { onBoardConnected, onBoardExit } = require('./board');
+const { handleShellSocket } = require('./shell');
 
 io.sockets.on('connection', function (socket) {
     console.log('Client connected');
