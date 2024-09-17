@@ -3,8 +3,8 @@ const events = require('./events');
 
 
 function handleShellSocket(socket) {
-    socket.on(events.SHELL.SEND(), (cmd) => {
-        exec("ls -la", (error, stdout, stderr) => {
+    socket.on(events.SHELL.SEND(), (command) => {
+        exec(command, (error, output, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
                 return;
@@ -15,8 +15,9 @@ function handleShellSocket(socket) {
                 return;
             }
 
-            console.log(`stdout: ${stdout}`);
-            socket.emit(events.SHELL.OUTPUT(), stdout)
+            socket.emit(events.SHELL.OUTPUT(), {
+                command, output
+            })
         });
     });
 };
