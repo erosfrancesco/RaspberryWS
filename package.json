@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npm install -g pm2",
     "start": "sudo node index.js",
     "setup": "pm2 start 'npm start'",
     "update": "git pull && pm2 restart 0",
