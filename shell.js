@@ -3,8 +3,8 @@ const events = require('./events');
 
 
 function handleShellSocket(socket) {
-    socket.on(events.SHELL.SEND(), (command) => {
-        exec(command, (error, output, stderr) => {
+    socket.on(events.SHELL.SEND(), ({ command, rootFolder = "/", widgetKey }) => {
+        exec(command, { cwd: rootFolder }, (error, output, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
                 return;
@@ -16,7 +16,7 @@ function handleShellSocket(socket) {
             }
 
             socket.emit(events.SHELL.OUTPUT(), {
-                command, output
+                command, output, widgetKey
             })
         });
     });
