@@ -5,7 +5,8 @@
   "scripts": {
     "start": "sudo node index.js",
     "setup": "pm2 start 'npm start'",
-    "update": "git pull && pm2 restart 0"
+    "update": "git pull && pm2 restart 0",
+    "logs": "pm2 logs 0"
   },
   "author": "",
   "license": "ISC",
