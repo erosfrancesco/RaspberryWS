@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "sudo node index.js"
+    "start": "sudo node index.js",
+    "setup": "pm2 start 'npm start'",
+    "update": "git pull && pm2 restart 0"
   },
   "author": "",
   "license": "ISC",
