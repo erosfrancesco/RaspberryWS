@@ -18,6 +18,8 @@ io.sockets.on('connection', function (socket) {
     console.log('Client connected');
     onBoardConnected(socket);
     handleShellSocket(socket);
+
+    socket.emit('connected');
 });
 
 process.on('SIGINT', function () { // on ctrl+c
