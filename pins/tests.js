@@ -13,26 +13,45 @@ const digitalTest = async () => {
 };
 
 const servoTest = () => {
-    /*
+    const pin = openPin('18');
+    pin.servoWrite(0);
     let pulseWidth = 500;
     let increment = 100;
-
-    pin.servoWrite(0);
 
     setInterval(function () {
         pin.servoWrite(pulseWidth);
         console.log('Pulsewidth:', pulseWidth)
 
         pulseWidth += increment;
-        if (pulseWidth >= 2000) {
+        if (pulseWidth >= 2500) {
             increment = -100;
-        } else if (pulseWidth <= 1000) {
+        } else if (pulseWidth <= 1500) {
             increment = 100;
         }
     }, 100);
-    /** */
 }
 
 // TESTS
-digitalTest();
+// digitalTest();
 servoTest();
+
+
+/** 
+const pin = openPin('18');
+let pulseWidth = 500;
+let increment = 100;
+
+pin.servoWrite(0);
+
+setTimeout(() => {
+    pin.servoWrite(1500);
+}, 1000)
+
+setTimeout(() => {
+    pin.servoWrite(2500);
+}, 2000)
+
+setTimeout(() => {
+    pin.servoWrite(0);
+}, 2500)
+/** */

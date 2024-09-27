@@ -11,18 +11,11 @@ http.listen(PORT, () => console.log('Server ready on port:', PORT));
 //
 
 //
-const { onBoardConnected, onBoardExit } = require('./board');
-const { handleShellSocket } = require('./shell');
+const { cleanup, setup } = require('./board');
 
-io.sockets.on('connection', function (socket) {
-    console.log('Client connected');
-    onBoardConnected(socket);
-    handleShellSocket(socket);
-
-    socket.emit('connected');
-});
+io.sockets.on('connection', setup);
 
 process.on('SIGINT', function () { // on ctrl+c
-    onBoardExit();
+    cleanup();
     process.exit();
 });

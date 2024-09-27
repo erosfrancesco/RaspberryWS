@@ -2,7 +2,7 @@ const { exec } = require("child_process");
 const events = require('./events');
 
 
-function handleShellSocket(socket) {
+function setup(socket) {
     socket.on(events.SHELL.SEND(), ({ command, rootFolder = "/", widgetKey }) => {
         exec(command, { cwd: rootFolder }, (error, output, stderr) => {
             if (error) {
@@ -22,7 +22,9 @@ function handleShellSocket(socket) {
     });
 };
 
+const cleanup = () => { }
 
 module.exports = {
-    handleShellSocket
+    setup,
+    cleanup
 }
