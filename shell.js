@@ -1,5 +1,4 @@
 const { exec } = require("child_process");
-const events = require('./events');
 
 const events = {
     CMD: 'shell.cmd',
