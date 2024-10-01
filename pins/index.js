@@ -1,4 +1,4 @@
-const { openPin, readPin, writeToPin, writePWMToPin } = require('./methods');
+const { openPin, readPin, writeToPin, writePWMToPin } = require('../board-methods');
 const events = require('./events');
 
 const pinout = {};
