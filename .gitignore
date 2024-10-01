@@ -1,5 +1,5 @@
 node_modules
 package-lock
-olds
-RPIO-master
+package.json
+
 .token
