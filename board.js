@@ -1,7 +1,6 @@
 const PINS = require('./pins');
 const I2C = require('./i2c');
 const SHELL = require('./shell');
-const events = require('./events');
 
 const onBoardConnected = (socket) => {
     PINS.setup(socket);
