@@ -1,0 +1,23 @@
+{
+  "name": "j5",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "setup": "npm i pm2 -g & npm run pm2-setup",
+    "pm2-setup": "pm2 start --name \"DashPIBoard\" npm -- start & pm2 save",
+    "start": "sudo node index.js",
+    "logs": "pm2 logs --name \"DashPIBoard\"",
+    "update": "git pull & pm2 restart --name \"DashPIBoard\""
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "i2c-bus": "^5.2.3",
+    "pigpio": "^3.3.1",
+    "socket.io": "^4.7.5"
+  },
+  "engines": {
+    "node": "18.16.0"
+  }
+}
