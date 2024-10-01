@@ -1,32 +1,32 @@
-const { openPin, readPin, writeToPin, writePWMToPin } = require('../board-methods.prod');
+const { openPin, readPin, writeToPin, writePWMToPin } = require('../board-methods');
 const events = require('./events');
 
 const pinout = {};
 const pwmListeners = {};
 
 // HANDLERS
-const onPinRead = (socket, pin) => () => {
+const onPinRead = (socket, { pin, widgetId }) => () => {
     if (!pinout[pin]) {
         socket.emit('Error', '[' + events.READ(pin) + ']: No pin!');
         return;
     }
 
-    readPin(pinout[pin]).then(value => {
-        socket.emit(events.READ(pin), value);
+    readPin(pinout[pin]).then(data => {
+        socket.emit(events.READ(pin), { data, widgetId });
     });
 }
 
-const onPinWrite = (socket, pin) => (value) => {
+const onPinWrite = (socket, { pin, widgetId }) => (data) => {
     if (!pinout[pin]) {
         socket.emit('Error', '[' + events.WRITE(pin) + ']: No pin!');
         return;
     }
 
-    writeToPin(pinout[pin], value);
-    socket.emit(events.WRITE(pin), value);
+    writeToPin(pinout[pin], data);
+    socket.emit(events.WRITE(pin), { data, widgetId });
 }
 
-const onPWMPinWrite = (socket, pin) => (value) => {
+const onPWMPinWrite = (socket, { pin, widgetId }) => (data) => {
     if (!pinout[pin]) {
         socket.emit('Error', '[' + events.PWM(pin) + ']: No pin!');
         return;
@@ -37,9 +37,9 @@ const onPWMPinWrite = (socket, pin) => (value) => {
         clearInterval(listenerId);
     }
 
-    const id = writePWMToPin(pinout[pin], value);
+    const id = writePWMToPin(pinout[pin], data);
     pwmListeners[pin] = id;
-    socket.emit(events.PWM(pin), value);
+    socket.emit(events.PWM(pin), { data, widgetId });
 }
 
 // BOARD SETUP AND CLEAN
@@ -52,8 +52,8 @@ const cleanup = () => {
 };
 
 const setup = (socket) => {
-    socket.on(events.OPEN, ({ pin } = {}) => {
-        console.log('PIN CONNECTED', pin);
+    socket.on(events.OPEN, ({ pin, widgetId } = {}) => {
+        console.log('PIN CONNECTED', pin, widgetId);
 
         if (!pin) {
             socket.emit('Error', '[' + events.OPEN + ']: No pin!');
@@ -63,11 +63,11 @@ const setup = (socket) => {
         pinout[pin] = pinout[pin] || openPin(pin);
 
         //
-        socket.emit(events.OPEN, { pin });
+        socket.emit(events.OPEN, { pin, widgetId });
 
-        socket.on(events.READ(pin), onPinRead(socket, pin));
-        socket.on(events.WRITE(pin), onPinWrite(socket, pin));
-        socket.on(events.PWM(pin), onPWMPinWrite(socket, pin));
+        socket.on(events.READ(pin), onPinRead(socket, { pin, widgetId }));
+        socket.on(events.WRITE(pin), onPinWrite(socket, { pin, widgetId }));
+        socket.on(events.PWM(pin), onPWMPinWrite(socket, { pin, widgetId }));
         // TODO: - Implement servo
     });
 }

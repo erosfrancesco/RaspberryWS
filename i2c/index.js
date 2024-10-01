@@ -2,7 +2,7 @@ const {
     openI2C,
     readI2CData,
     writeI2C
-} = require('../board-methods.prod');
+} = require('../board-methods');
 const events = require('./events');
 
 const i2c = {
