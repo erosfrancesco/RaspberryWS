@@ -52,10 +52,11 @@ const cleanup = () => {
 };
 
 const setup = (socket) => {
-    socket.on(events.OPEN(), ({ pin } = {}) => {
-        console.log('PIN CONNECTED', pin)
+    socket.on(events.OPEN, ({ pin } = {}) => {
+        console.log('PIN CONNECTED', pin);
+
         if (!pin) {
-            socket.emit('Error', '[' + events.OPEN() + ']: No pin!');
+            socket.emit('Error', '[' + events.OPEN + ']: No pin!');
             return;
         }
 

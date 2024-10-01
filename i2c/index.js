@@ -78,7 +78,7 @@ const onSettingsReceived = (socket) => (settings) => {
         dataStructure[key] = Number('0x' + settings.dataStructure[key]);
     });
 
-    const deviceSetup = settings.deviceSetup.map((config) => {
+    const deviceSetup = (settings.deviceSetup || []).map((config) => {
         const address = Number('0x' + config.address);
         const value = Number(config.value);
 

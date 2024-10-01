@@ -1,6 +1,5 @@
 const events = {
-
-    OPEN: (pin) => 'pin.open.' + pin,
+    OPEN: 'pin.open',
     READ: (pin) => 'pin.read.' + pin,
     WRITE: (pin) => 'pin.write.' + pin,
     PWM: (pin) => 'pin.pwm.' + pin,

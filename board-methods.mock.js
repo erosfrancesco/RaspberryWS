@@ -6,10 +6,13 @@
  */
 
 // GPIO
-const Gpio = (pin, configs) => {
+function Gpio(pin, configs) {
+    this.pin = pin;
     this.digitalRead = () => { return 1; }
     this.digitalWrite = () => { }
     this.pwmWrite = () => { }
+
+    this.unexport = () => { }
 
     return this;
 };
