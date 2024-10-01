@@ -1,9 +1,8 @@
 const {
     openI2C,
-    closeI2C,
     readI2CData,
     writeI2C
-} = require('./methods');
+} = require('../board-methods');
 const events = require('./events');
 
 const i2c = {
@@ -79,7 +78,7 @@ const onSettingsReceived = (socket) => (settings) => {
         dataStructure[key] = Number('0x' + settings.dataStructure[key]);
     });
 
-    const deviceSetup = settings.deviceSetup.map((config) => {
+    const deviceSetup = (settings.deviceSetup || []).map((config) => {
         const address = Number('0x' + config.address);
         const value = Number(config.value);
 

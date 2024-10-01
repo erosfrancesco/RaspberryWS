@@ -1,4 +1,7 @@
 node_modules
-olds
+package-lock
+
+package.json
+board-methods.js
 
 .token
