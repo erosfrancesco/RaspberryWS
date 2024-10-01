@@ -1,9 +1,12 @@
 const { exec } = require("child_process");
-const events = require('./events');
+
+const events = {
+    CMD: 'shell.cmd',
+};
 
 
 function setup(socket) {
-    socket.on(events.SHELL.SEND(), ({ command, rootFolder = "/", widgetKey }) => {
+    socket.on(events.CMD, ({ command, rootFolder = "/", widgetId }) => {
         exec(command, { cwd: rootFolder }, (error, output, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
@@ -15,8 +18,8 @@ function setup(socket) {
                 return;
             }
 
-            socket.emit(events.SHELL.OUTPUT(), {
-                command, output, widgetKey
+            socket.emit(events.CMD, {
+                command, output, widgetId
             })
         });
     });
