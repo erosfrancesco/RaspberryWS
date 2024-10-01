@@ -1,5 +1,3 @@
-// TODO: - Mock
-
 // GPIO
 const { Gpio } = require('pigpio');
 
