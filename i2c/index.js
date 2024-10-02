@@ -37,6 +37,7 @@ const writeDeviceSetup = () => {
 };
 
 const startI2C = (socket) => {
+    console.log('I2C Connected')
     if (i2c.interval) {
         return i2c.interval;
     };
@@ -46,12 +47,13 @@ const startI2C = (socket) => {
 
     i2c.interval = setInterval(() => {
         const data = readI2CData(i2c.channel, i2cSettings.address, i2cSettings.dataStructure);
-        onData((data) => socket.emit(events.DATA, data));
+        socket.emit(events.DATA, data);
     }, i2cSettings.readFrequency);
 };
 //
 
 const onSettingsReceived = (socket) => (settings) => {
+    console.log('I2C Settings', settings)
     const { widgetId } = settings || {};
 
     if (!widgetId) {
