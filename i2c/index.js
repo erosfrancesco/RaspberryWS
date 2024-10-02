@@ -12,7 +12,7 @@ const i2c = {
 
 const i2cSettings = {
     address: null,
-    dataStructure: null,
+    dataSchema: null,
     readFrequency: null,
     deviceSetup: null,
     widgetId: null
@@ -46,7 +46,7 @@ const startI2C = (socket) => {
     writeDeviceSetup();
 
     i2c.interval = setInterval(() => {
-        const data = readI2CData(i2c.channel, i2cSettings.address, i2cSettings.dataStructure);
+        const data = readI2CData(i2c.channel, i2cSettings.address, i2cSettings.dataSchema);
         socket.emit(events.DATA, data);
     }, i2cSettings.readFrequency);
 };
@@ -73,15 +73,15 @@ const onSettingsReceived = (socket) => (settings) => {
     }
 
     // parse settings
-    const address = Number('0x' + settings.address);
+    const address = Number(settings.address);
     const readFrequency = Number(settings.readFrequency);
-    const dataStructure = {};
-    Object.keys(settings.dataStructure).forEach(key => {
-        dataStructure[key] = Number('0x' + settings.dataStructure[key]);
+    const dataSchema = {};
+    Object.keys(settings.dataSchema).forEach(key => {
+        dataSchema[key] = Number(settings.dataSchema[key]);
     });
 
     const deviceSetup = (settings.deviceSetup || []).map((config) => {
-        const address = Number('0x' + config.address);
+        const address = Number(config.address);
         const value = Number(config.value);
 
         return { address, value };
@@ -89,7 +89,7 @@ const onSettingsReceived = (socket) => (settings) => {
 
     // save settings
     i2cSettings.address = address;
-    i2cSettings.dataStructure = dataStructure;
+    i2cSettings.dataSchema = dataSchema;
     i2cSettings.readFrequency = readFrequency;
     i2cSettings.deviceSetup = deviceSetup;
     i2cSettings.widgetId = settings.widgetId;
