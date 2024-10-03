@@ -13,7 +13,7 @@ http.listen(PORT, () => console.log('Server ready on port:', PORT));
 //
 const { cleanup, setup } = require('./board');
 
-io.sockets.on('connection', setup);
+io.on('connection', setup);
 
 process.on('SIGINT', function () { // on ctrl+c
     cleanup();
