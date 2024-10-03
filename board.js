@@ -16,7 +16,7 @@ const setup = (socket) => {
     I2C.setup(socket);
     SHELL.setup(socket);
 
-    socket.emit('connected');
+    socket.on('disconnect', () => console.log('Client disconnected'))
 };
 
 module.exports = { setup, cleanup };
