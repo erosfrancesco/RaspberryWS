@@ -56,7 +56,7 @@ In order to manage I2C, a bit of settings are required, it's not exactly a plug-
 
 
   - widgetId: - (duh)
-  - address: - I2C Device address. (In case of the MPU6050 is 0x68, or 104)
+  - address: - I2C Device address. (In case of the MPU6050 is 0x68, or 104). Could be useful to scan for devices: `sudo i2cdetect -y 1`
   - deviceSetup: - A list of `{address, value }`. On I2C startup, these values are written on their respective addresses
   - dataSchema: - A map of `[key]: address`. On I2C read, for every key (or label), read data on the corresponding address and build an object of this type: `{[key]: addressData}`
   - readFrequency - Read every ms.
