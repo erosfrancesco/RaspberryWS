@@ -18,11 +18,28 @@ On Socket connection the app setup 3 modules for managing the board by socket ev
     Open GPIO pin, listen to receive confirmation.
     - send    `{ pin }`
     - receive `{ pin }`
-  - READ: Read from 
-  - Write
-    - Write Success
-  - Write PWM
-    - PWM Success
+  - READ(pin)
+  
+    Read from opened GPIO pin. Listen to receive data.
+    - send
+    - receive `{ data }`
+  - Write(pin)
+    
+    Digital write to opened GPIO pin. Listen to receive confirmation.
+    - send `data`
+    - receive `{ data }`
+
+    
+  - Write PWM(pin)
+    
+    PWM write to opened GPIO pin. Listen to receive confirmation.
+    the value can be from 0 to 256, and is written every 20 ms.
+    - send `data`
+    - receive `{ data }`
+
+  TODOS: 
+    - Check PWM write cycle, make some event to manage it.
+    - Make Servo write events.
 
 ## I2C
   - Settings (open and read)
