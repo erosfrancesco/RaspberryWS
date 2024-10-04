@@ -1,10 +1,11 @@
 # SocketBoard
 
-On Socket connection the app setup 3 modules for managing the board by socket events.
+The app setup 3 modules for managing the board by socket events.
+
 > [!NOTE]
-> Every socket packet should have a `widgetId` property, so that events can be filtered by connected widgets.
-> 
 > All events are available once a connection has been extabilished. For that, see the `connection` socket docs.
+> 
+> Every socket packet should have a `widgetId` property, so that events can be filtered by connected widgets. This could be managed by room also, but for now that's a WIP.
 
 
 ## SHELL MODULE
