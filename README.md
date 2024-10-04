@@ -17,7 +17,7 @@ A module for Shell connectivity. Under the hood it uses [child_process](https://
     - receive `{ command, output }`
 
 ## GPIO
-A module for GPIO connectivity. Under the hood it uses [pigpio](https://nodejs.org/api/child_process.html](https://www.npmjs.com/package/pigpio)
+A module for GPIO connectivity. Under the hood it uses [pigpio](https://www.npmjs.com/package/pigpio)
 
 > [!CAUTION]
 > Before app installation, check the setup of pigpio on your board.
@@ -51,7 +51,8 @@ A module for GPIO connectivity. Under the hood it uses [pigpio](https://nodejs.o
 
 ## I2C
 
-A module for I2C connectivity. Under the hood it uses [pigpio](https://nodejs.org/api/child_process.html](https://www.npmjs.com/package/pigpio)
+A module for I2C connectivity. Under the hood it uses [i2c-bus](https://www.npmjs.com/package/i2c-bus)
+
 In order to manage I2C, a bit of settings are required, it's not exactly a plug-and-play. This module uses the object `i2cSettings`:
 
 
