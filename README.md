@@ -6,14 +6,18 @@ On Socket connection the app setup 3 modules for managing the board by socket ev
 
 
 ## SHELL MODULE
-  - CMD: Send command, listen for command output
+  - CMD
+    
+    Send a shell command, listen for command output
     - send    `{ command, rootFolder }`
     - receive `{ command, output }`
 
 ## GPIO
-  - OPEN: Send to open GPIO pin, listen to receive confirmation.
-    - send    { pin, widgetId }
-    - receive { pin, widgetId }
+  - OPEN
+
+    Open GPIO pin, listen to receive confirmation.
+    - send    `{ pin }`
+    - receive `{ pin }`
   - READ: Read from 
   - Write
     - Write Success
