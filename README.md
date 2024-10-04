@@ -64,7 +64,6 @@ In order to manage I2C, a bit of settings are required, it's not exactly a plug-
 > [!CAUTION]
 > Before app installation, check the setup of I2C on your board.
 
-  - Settings (open and read)
   - Status
     
     Write settings on your board for I2C connection. Listen to receive updated settings
@@ -72,6 +71,8 @@ In order to manage I2C, a bit of settings are required, it's not exactly a plug-
     - receive `i2cSettings` (see above)
       
   - Data
+
+    Listen to receive data stream. It has the dataSchema defined in the settings.
   
   TODOS: 
   - [ ] \(Optional) Write events
