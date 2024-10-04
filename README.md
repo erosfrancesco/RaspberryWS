@@ -1,6 +1,7 @@
 # SocketBoard
 
-On Socket connection, these events are available:
+On Socket connection the app setup 3 main modules for managing the board by socket events.
+Every socket packet should have a widgetId property.
 
 ## SHELL MODULE
   - CMD: Send command, listen for command output
