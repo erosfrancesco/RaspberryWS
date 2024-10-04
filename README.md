@@ -9,6 +9,7 @@ The app setup 3 modules for managing the board by socket events.
 
 
 ## SHELL MODULE
+A module for Shell connectivity. Under the hood it uses [child_process](https://nodejs.org/api/child_process.html)
   - CMD
     
     Send a shell command, listen for command output
@@ -16,6 +17,11 @@ The app setup 3 modules for managing the board by socket events.
     - receive `{ command, output }`
 
 ## GPIO
+A module for GPIO connectivity. Under the hood it uses [pigpio](https://nodejs.org/api/child_process.html](https://www.npmjs.com/package/pigpio)
+
+> [!CAUTION]
+> Before app installation, check the setup of pigpio module.
+
   - OPEN
 
     Open GPIO pin, listen to receive confirmation.
@@ -45,6 +51,7 @@ The app setup 3 modules for managing the board by socket events.
 
 ## I2C
   - Settings (open and read)
-    - Opened Success
   - Data
-  - Write
+  
+  TODOS: 
+  - [ ] \(Optional) Write events
