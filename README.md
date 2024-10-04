@@ -1,7 +1,9 @@
 # SocketBoard
 
 On Socket connection the app setup 3 modules for managing the board by socket events.
+> [!NOTE]
 > Every socket packet should have a `widgetId` property, so that events can be filtered by connected widgets.
+> 
 > All events are available once a connection has been extabilished. For that, see the `connection` socket docs.
 
 
@@ -29,7 +31,6 @@ On Socket connection the app setup 3 modules for managing the board by socket ev
     - send `data`
     - receive `{ data }`
 
-    
   - Write PWM(pin)
     
     PWM write to opened GPIO pin. Listen to receive confirmation.
@@ -38,8 +39,8 @@ On Socket connection the app setup 3 modules for managing the board by socket ev
     - receive `{ data }`
 
   TODOS: 
-    - Check PWM write cycle, make some event to manage it.
-    - Make Servo write events.
+  - [ ] \(Optional) PWM write cycle management events
+  - [ ] \(Optional) Servo events
 
 ## I2C
   - Settings (open and read)
