@@ -53,8 +53,10 @@ A module for GPIO connectivity. Under the hood it uses [pigpio](https://www.npmj
 
 A module for I2C connectivity. Under the hood it uses [i2c-bus](https://www.npmjs.com/package/i2c-bus)
 
-In order to manage I2C, a bit of settings are required, it's not exactly a plug-and-play. This module uses the object `i2cSettings`:
+> [!CAUTION]
+> Before app installation, check the setup of I2C on your board.
 
+In order to manage I2C, a bit of settings are required, it's not exactly a plug-and-play. This module uses the object `i2cSettings`:
 
   - widgetId: - (duh)
   - address: - I2C Device address. (In case of the MPU6050 is 0x68, or 104). Could be useful to scan for devices: `sudo i2cdetect -y 1`
@@ -62,8 +64,6 @@ In order to manage I2C, a bit of settings are required, it's not exactly a plug-
   - dataSchema: - A map of `[key]: address`. On I2C read, for every key (or label), read data on the corresponding address and build an object of this type: `{[key]: addressData}`
   - readFrequency - Read every ms.
 
-> [!CAUTION]
-> Before app installation, check the setup of I2C on your board.
 
   - Status
     
